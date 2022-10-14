@@ -12,6 +12,7 @@ const pixabayAPI = new Pixabay();
 
 export const App = () => {
 
+    const [isNoMatches, setIsNoMatches] = useState(false);
     const [images, setImages] = useState([]);
     const [pages, setPages] = useState(null);
     const [itemsResidual, setItemsResidual] = useState(null);
@@ -21,6 +22,7 @@ export const App = () => {
     const handleSubmit = async event => {
         event.preventDefault();
         
+        setIsNoMatches(false);
         setImages([]);
         setPages(null);
         setItemsResidual(null);
@@ -35,6 +37,8 @@ export const App = () => {
             const { hits, totalHits } = await pixabayAPI.getContentByInputData();
 
             if (hits.length === 0) {
+                setIsNoMatches(true);
+                setIsLoad(false);
                 return;
             }
             
@@ -85,6 +89,8 @@ export const App = () => {
             <Searchbar handleSubmit={handleSubmit} />
 
             <ImageGallery colections={images} />
+
+            {isNoMatches && <Loader message={'No matches found! Please enter another data for searching.'} />}
             
             {isLoad && <Loader />}
 

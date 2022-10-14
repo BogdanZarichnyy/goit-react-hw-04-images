@@ -16,7 +16,6 @@ export const ImageGalleryItem = ({ largeImageURL, webformatURL, tags }) => {
     }
     
     const handleCloseModalKeyDown = ({ code }) => {
-        console.log(code);
         if (code === 'Escape') {
             setShowModal(false);
         }
